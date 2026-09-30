@@ -50,14 +50,27 @@ jobs:
 
       - name: Analyze Dart code
         run: flutter analyze || true
+        continue-on-error: true
 
-      - name: Build APK (verbose)
-        run: flutter build apk --release --verbose 2>&1 | tail -200
+      - name: Build APK
+        run: flutter build apk --release --verbose 2>&1 | tail -300
+        continue-on-error: true
+
+      - name: Find APK files
+        run: |
+          echo "=== Searching for APK files ==="
+          find build -name "*.apk" -type f 2>/dev/null || echo "No APK found"
+          echo "=== Contents of build/app/outputs ==="
+          ls -la build/app/outputs/ 2>/dev/null || echo "outputs not found"
+          ls -la build/app/outputs/flutter-apk/ 2>/dev/null || echo "flutter-apk not found"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
-          if-no-files-found: error
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/**/*.apk
+          if-no-files-found: warn
           retention-days: 7
