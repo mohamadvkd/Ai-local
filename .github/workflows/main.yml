@@ -31,16 +31,12 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Accept Android Licenses
-        run: yes | sdkmanager --licenses || true
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
       - name: Install NDK 28 and CMake
         run: |
-          sdkmanager --install "ndk;28.0.12674087" "cmake;3.22.1" || true
-          sdkmanager --install "cmake;3.31.0" || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;28.0.12674087" "cmake;3.22.1" || true
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
