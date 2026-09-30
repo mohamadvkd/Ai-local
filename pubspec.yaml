@@ -1,5 +1,5 @@
 name: ai_local
-description: A professional task manager built with Flutter.
+description: A local AI chat app with llama.cpp support.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -9,7 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.2.2
+  # مكتبة اختيار الملفات
+  file_picker: ^8.1.2
+  # مكتبة fllama الرسمية من المطور
+  fllama:
+    git:
+      url: https://github.com/Telosnex/fllama.git
+      ref: main
 
 flutter:
   uses-material-design: true
