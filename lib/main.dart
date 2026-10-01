@@ -111,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       String aiResponse = '';
 
-      await fllamaChat(req, (response, isDone) {
+      await fllamaChat(req, (response, token, isDone) {
         if (response.isNotEmpty) {
           aiResponse += response;
           if (mounted) {
